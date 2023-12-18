@@ -6,10 +6,12 @@ def create_structure(file_path):
         Content = file.read().split("\n")
     
     for text in Content:
-        Paths.append(text.split())
+        Paths.append(text.split(" > "))
 
     for Path in Paths:
-        print("/".join(Path))
-        os.makedirs("/".join(Path))
+        Route = "/".join(Path)
+        if not os.path.exists(Route):
+            os.makedirs(Route)
+    print(f"Folder structute created in : {os.getcwd()}")
         
 create_structure("Structure.txt")
