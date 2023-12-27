@@ -1,17 +1,21 @@
 import os
-def create_structure(file_path):
-    Paths = []
-    Content = None
-    with open(file_path,"r") as file:
-        Content = file.read().split("\n")
-    
-    for text in Content:
-        Paths.append(text.split(" > "))
 
+def parseFile(file_path):
+    Routs = []
+    with open(file_path,"r") as file:
+        while True:
+            Content = file.readline().split("\n")[0]
+            Routs.append("/".join(Content.split(" > ")))
+            if not Content:
+                break
+    Routs.pop(-1)
+    return Routs
+    
+def create_structure(Paths):
     for Path in Paths:
-        Route = "/".join(Path)
-        if not os.path.exists(Route):
-            os.makedirs(Route)
+        if not os.path.exists(Path):
+            os.makedirs(Path)
     print(f"Folder structute created in : {os.getcwd()}")
         
-create_structure("Structure.txt")
+Parsed_Data = parseFile("Structure.txt")
+create_structure(Parsed_Data)
