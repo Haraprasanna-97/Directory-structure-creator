@@ -48,10 +48,9 @@ In the above example
 * B, D and E are sub-foldera under A
 * C is a sub-folder under B, and F is a sub-folder under aE, hense C and E are sub-sub folder
 
-## 
-    Structure file key
+## Structure file key
 
 | Symbol | Meaning             | Uaage example | Usage meaning                                        |
-| ------ | ------------------- | ------------- | ---------------------------------------------------- |
-| >      | Inside              | A > B         | Folder B is inside folder A                         |
-| :      | Sequence of folders | A:1-4         | Define a set of folders SUCH as A 1, A 2, A 3, A 4 |
+| :----: | ------------------- | ------------- | ---------------------------------------------------- |
+|   >   | Inside              | A > B         | Folder B is inside folder A                         |
+|   :   | Sequence of folders | A:1-4         | Define a set of folders such as A 1, A 2, A 3, A 4 |

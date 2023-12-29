@@ -13,6 +13,10 @@ def parseFile(file_path):
                     for i in range(int(Start),int(End)+1):
                         # print(i)
                         Routs.append("/".join(Content.split(" > ")).replace(f":{Start}-{End}",f" {i}"))
+                # elif not Start.isnumeric():
+                #     print(Start)
+                # elif not End.isnumeric():
+                #     print(End)
             else:
                 Routs.append("/".join(Content.split(" > ")))
             if not Content:
