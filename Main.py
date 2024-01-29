@@ -1,11 +1,12 @@
 import os
+import json
 
-class Structure_Creator:
-    def __init__(self,file_path):
+class Directory_Structure_Creator:
+    def __init__(self,file_path, paths = None):
         self.file_path = file_path
-        self.paths = None
+        self.paths = paths
 
-    def parseFile(self):
+    def parse_File(self):
         Routs = []
         with open(self.file_path,"r") as file:
             while True:
@@ -13,15 +14,9 @@ class Structure_Creator:
                 if "-" in Content:
                     Start = Content.split("-")[0].split(":")[-1]
                     End = Content.split("-")[-1]
-                    # print(Start,End)
                     if Start.isnumeric() and End.isnumeric():
                         for i in range(int(Start),int(End)+1):
-                            # print(i)
                             Routs.append("/".join(Content.split(" > ")).replace(f":{Start}-{End}",f" {i}"))
-                    # elif not Start.isnumeric():
-                    #     print(Start)
-                    # elif not End.isnumeric():
-                    #     print(End)
                 else:
                     Routs.append("/".join(Content.split(" > ")))
                 if not Content:
@@ -29,20 +24,41 @@ class Structure_Creator:
         Routs.pop(-1)
         self.paths = Routs
         return Routs
-        # print(Routs)
         
     def create_structure(self, Paths = None):
-        if Paths is None:
-            for Path in self.paths:
-                if not os.path.exists(Path):
-                    os.makedirs(Path)
-        else:
-            for Path in Paths:
-                if not os.path.exists(Path):
-                    os.makedirs(Path)
+        List = self.paths
+        if Paths is not None:
+            List = Paths
+        for Path in List:
+            if not os.path.exists(Path):
+                os.makedirs(Path)
+        # else:
+        #     for Path in Paths:
+        #         if not os.path.exists(Path):
+        #             os.makedirs(Path)
         print(f"Folder structute created in : {os.getcwd()}")
 
-Obj = Structure_Creator("Structure.txt")
+    @staticmethod
+    def export_JSON(Paths, JSON_filepath):
+        with open(JSON_filepath, 'w') as file:
+            file.write(json.dumps(Paths))
+    
+    # Alternative Constructors
+    @classmethod
+    def from_JSON(cls, JSON_filepath):
+        with open(JSON_filepath, 'r') as file:
+            Data = json.load(file)
+        return cls(JSON_filepath,Data)
+
+Obj = Structure_Creator("Structure Modified.txt")
 Parsed_Data = Obj.parseFile()
-Obj.create_structure()
-print(Parsed_Data)
+# Obj.create_structure()
+# print(Parsed_Data)
+
+# Structure_Creator.export_JSON(Parsed_Data,"Structure Modified.json")
+Obj2 = Structure_Creator.from_JSON("Structure Modified.json")
+Obj2.create_structure()
+
+print(type(Obj2))
+print(type(Obj2.file_path))
+print(type(Obj2.paths))
