@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import json
 
@@ -32,10 +33,6 @@ class Directory_Structure_Creator:
         for Path in List:
             if not os.path.exists(Path):
                 os.makedirs(Path)
-        # else:
-        #     for Path in Paths:
-        #         if not os.path.exists(Path):
-        #             os.makedirs(Path)
         print(f"Folder structute created in : {os.getcwd()}")
 
     @staticmethod
@@ -43,22 +40,45 @@ class Directory_Structure_Creator:
         with open(JSON_filepath, 'w') as file:
             file.write(json.dumps(Paths))
     
-    # Alternative Constructors
+    # Alternate Constructors
     @classmethod
     def from_JSON(cls, JSON_filepath):
         with open(JSON_filepath, 'r') as file:
             Data = json.load(file)
         return cls(JSON_filepath,Data)
+    
+    def save(self):
+        filepath, extension = os.path.splitext(self.file_path)
+        with open(self.file_path, 'r') as file:
+            if extension == ".json":
+                Content = json.load(file)
+            elif extension == ".txt":
+                Content = file.read()
 
-Obj = Structure_Creator("Structure Modified.txt")
-Parsed_Data = Obj.parseFile()
+        now = datetime.now()
+
+        Metadata = {
+            "Date and time" : now.strftime("%Y-%m-%d %H:%M:%S"),
+            "Structure descriptor file path" : self.file_path,
+            "Structure descriptor file content" : Content,
+            "Paths" : self.paths
+        }
+
+        save_as = f"{filepath} Metadata.json"
+        Directory_Structure_Creator.export_JSON(Metadata,save_as)
+        print(f"State saved to {save_as}")
+
+Obj = Directory_Structure_Creator("Structure Modified.txt")
+Parsed_Data = Obj.parse_File()
 # Obj.create_structure()
 # print(Parsed_Data)
+Obj.save()
 
-# Structure_Creator.export_JSON(Parsed_Data,"Structure Modified.json")
-Obj2 = Structure_Creator.from_JSON("Structure Modified.json")
-Obj2.create_structure()
+# Directory_Structure_Creator.export_JSON(Parsed_Data,"Structure Modified.json")
+# Obj2 = Directory_Structure_Creator.from_JSON("Structure Modified.json")
+# Obj2.create_structure()
+# Obj2.save()
 
-print(type(Obj2))
-print(type(Obj2.file_path))
-print(type(Obj2.paths))
+# print(type(Obj2))
+# print(Obj2.file_path)
+# print(Obj2.paths)
