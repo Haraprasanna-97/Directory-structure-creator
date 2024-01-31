@@ -47,6 +47,15 @@ class Directory_Structure_Creator:
             Data = json.load(file)
         return cls(JSON_filepath,Data)
     
+    @classmethod
+    def from_Metadata(cls,Metadata_file):
+        print(f"Metadata file : {Metadata_file}")
+        with open(Metadata_file, 'r') as file:
+            metadata = json.load(file)
+        file_path = metadata["Structure descriptor file path"]
+        paths = metadata["Paths"]
+        return cls(file_path, paths)
+    
     def save(self):
         filepath, extension = os.path.splitext(self.file_path)
         with open(self.file_path, 'r') as file:
@@ -68,11 +77,18 @@ class Directory_Structure_Creator:
         Directory_Structure_Creator.export_JSON(Metadata,save_as)
         print(f"State saved to {save_as}")
 
-Obj = Directory_Structure_Creator("Structure Modified.txt")
-Parsed_Data = Obj.parse_File()
+    # Magic methods
+    def __str__(self):
+        return f"""STRUCTURE DETAILS
+        File path : {self.file_path}
+        Paths : {self.paths}
+        """
+
+# Obj = Directory_Structure_Creator("Structure Modified.txt")
+# Parsed_Data = Obj.parse_File()
 # Obj.create_structure()
 # print(Parsed_Data)
-Obj.save()
+# Obj.save()
 
 # Directory_Structure_Creator.export_JSON(Parsed_Data,"Structure Modified.json")
 # Obj2 = Directory_Structure_Creator.from_JSON("Structure Modified.json")
@@ -82,3 +98,8 @@ Obj.save()
 # print(type(Obj2))
 # print(Obj2.file_path)
 # print(Obj2.paths)
+
+Obj3 = Directory_Structure_Creator.from_Metadata(f"{os.getcwd()}\\Structure Modified Metadata.json")
+# Obj3 = Directory_Structure_Creator.from_Metadata("Structure Modified Metadata.json")
+Obj3.create_structure()
+print(Obj3)
