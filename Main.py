@@ -39,23 +39,20 @@ class Directory_Structure_Creator:
     def export_JSON(Paths, JSON_filepath):
         with open(JSON_filepath, 'w') as file:
             file.write(json.dumps(Paths))
-    
-    # Alternate Constructors
-    @classmethod
-    def from_JSON(cls, JSON_filepath):
-        with open(JSON_filepath, 'r') as file:
-            Data = json.load(file)
-        return cls(JSON_filepath,Data)
-    
-    @classmethod
-    def from_Metadata(cls,Metadata_file):
-        print(f"Metadata file : {Metadata_file}")
-        with open(Metadata_file, 'r') as file:
-            metadata = json.load(file)
-        file_path = metadata["Structure descriptor file path"]
-        paths = metadata["Paths"]
-        return cls(file_path, paths)
-    
+
+    @staticmethod
+    def export_folder(folder_path = os.getcwd()):
+        Paths = []
+        for path, subdirs, files in os.walk(folder_path):
+            for subdir in subdirs:
+                Paths.append(os.path.join(os.path.basename(folder_path),path[len(folder_path) + 1:], subdir))
+
+        folder_name = os.path.basename(folder_path)
+        save_as = f"Structure of {folder_name} folder.json"
+        Directory_Structure_Creator.export_JSON(Paths, save_as)
+        
+        print(f"Folder details saved to {save_as}")
+
     def save(self):
         filepath, extension = os.path.splitext(self.file_path)
         with open(self.file_path, 'r') as file:
@@ -75,7 +72,23 @@ class Directory_Structure_Creator:
 
         save_as = f"{filepath} Metadata.json"
         Directory_Structure_Creator.export_JSON(Metadata,save_as)
-        print(f"State saved to {save_as}")
+        print(f"Metadata saved to {save_as}")
+    
+    # Alternate Constructors
+    @classmethod
+    def from_JSON(cls, JSON_filepath):
+        with open(JSON_filepath, 'r') as file:
+            Data = json.load(file)
+        return cls(JSON_filepath,Data)
+    
+    @classmethod
+    def from_Metadata(cls,Metadata_file):
+        print(f"Metadata file : {Metadata_file}")
+        with open(Metadata_file, 'r') as file:
+            metadata = json.load(file)
+        file_path = metadata["Structure descriptor file path"]
+        paths = metadata["Paths"]
+        return cls(file_path, paths)
 
     # Magic methods
     def __str__(self):
@@ -84,6 +97,7 @@ class Directory_Structure_Creator:
         Paths : {self.paths}
         """
 
+# Obj = Directory_Structure_Creator(f"{os.getcwd()}\\Structure Modified.txt")
 # Obj = Directory_Structure_Creator("Structure Modified.txt")
 # Parsed_Data = Obj.parse_File()
 # Obj.create_structure()
@@ -91,6 +105,7 @@ class Directory_Structure_Creator:
 # Obj.save()
 
 # Directory_Structure_Creator.export_JSON(Parsed_Data,"Structure Modified.json")
+
 # Obj2 = Directory_Structure_Creator.from_JSON("Structure Modified.json")
 # Obj2.create_structure()
 # Obj2.save()
@@ -99,7 +114,22 @@ class Directory_Structure_Creator:
 # print(Obj2.file_path)
 # print(Obj2.paths)
 
-Obj3 = Directory_Structure_Creator.from_Metadata(f"{os.getcwd()}\\Structure Modified Metadata.json")
+# Obj3 = Directory_Structure_Creator.from_Metadata(f"{os.getcwd()}\\Structure Modified Metadata.json")
+
 # Obj3 = Directory_Structure_Creator.from_Metadata("Structure Modified Metadata.json")
-Obj3.create_structure()
-print(Obj3)
+# Obj3.create_structure()
+# print(Obj)
+# Obj3 = Directory_Structure_Creator.from_Metadata("Structure Modified Metadata.json")
+# print(Obj3)
+# Directory_Structure_Creator.export_folder("C:\\Users\\harap\\Music\\Gana")
+# Directory_Structure_Creator.export_folder()
+# print(Obj3)
+    
+# Obj4 = Directory_Structure_Creator.from_JSON("Structure of Directory structure creator folder.json")
+# print(Obj4)
+# Obj4.create_structure()
+
+
+# Final_Obj = Directory_Structure_Creator.from_JSON("Structure of Gana folder.json")
+# print(Obj4)
+# Final_Obj.create_structure()
