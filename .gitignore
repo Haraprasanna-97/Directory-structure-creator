@@ -1,4 +1,6 @@
 *
 !.gitignore
 !README.md
-!Main.py
+!GUI.py
+!Terminal App.py
+!Directory_Structure_Creator.py
