@@ -27,14 +27,14 @@ class Directory_Structure_Creator:
         self.paths = Routs
         return Routs
         
-    def create_structure(self, Paths = None):
+    def create_structure(self, Paths = None, destination_folder_path = os.getcwd()):
         List = self.paths
         if Paths is not None:
             List = Paths
         for Path in List:
-            if not os.path.exists(Path):
-                os.makedirs(Path)
-        print(f"Folder structute created in : {os.getcwd()}")
+            if not os.path.exists(os.path.join(destination_folder_path, Path)):
+                os.makedirs(os.path.join(destination_folder_path, Path))
+        return f"Folder structute created in : {destination_folder_path}"
 
     @staticmethod
     def export_JSON(Paths, JSON_filepath):
@@ -53,7 +53,7 @@ class Directory_Structure_Creator:
         Directory_Structure_Creator.export_JSON(Paths, save_as)
         return f"Folder details saved to {save_as}"
 
-    def save(self):
+    def save(self, destination_folder_path = os.getcwd()):
         filepath, extension = os.path.splitext(self.file_path)
         with open(self.file_path, 'r') as file:
             if extension == ".json":
@@ -62,15 +62,16 @@ class Directory_Structure_Creator:
                 Content = file.read()
 
         now = datetime.now()
+        date_time = now.strftime("%Y-%m-%d %H:%M:%S")
 
         Metadata = {
-            "Date and time" : now.strftime("%Y-%m-%d %H:%M:%S"),
+            "Date and time" : date_time,
             "Structure descriptor file path" : self.file_path,
             "Structure descriptor file content" : Content,
             "Paths" : self.paths
         }
 
-        save_as = f"{filepath} Metadata.json"
+        save_as = os.path.join(destination_folder_path, f"{filepath}_{date_time} Metadata.json")
         Directory_Structure_Creator.export_JSON(Metadata,save_as)
         print(f"Metadata saved to {save_as}")
     
@@ -92,7 +93,8 @@ class Directory_Structure_Creator:
 
     # Magic methods
     def __str__(self):
-        return f"""STRUCTURE DETAILS
+        return f"""
+        STRUCTURE DETAILS
         File path : {self.file_path}
         Paths : {self.paths}
         """
@@ -128,7 +130,6 @@ class Directory_Structure_Creator:
 # Obj4 = Directory_Structure_Creator.from_JSON("Structure of Directory structure creator folder.json")
 # print(Obj4)
 # Obj4.create_structure()
-
 
 # Final_Obj = Directory_Structure_Creator.from_JSON("Structure of Gana folder.json")
 # print(Obj4)
