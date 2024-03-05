@@ -76,6 +76,14 @@ In the above example,
 * The folder name can have of one or more words sepsrated by spareted by space
 * The folder names are separeted by slash `/`
 
+### Using Graphical User Interface (GUI)
+
+* As of now, you can export a folder structure as a JSON file
+* To access the GUI run the following command
+  ```
+  python GUI.py
+  ```
+
 ## Structure file key for text file
 
 | Symbol | Meaning             | Uaage example | Usage meaning                                        |
