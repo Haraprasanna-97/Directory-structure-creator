@@ -38,6 +38,7 @@ class Directory_Structure_Creator:
 
     @staticmethod
     def export_JSON(Paths, JSON_filepath):
+        print(f"From export_JSON {JSON_filepath}")
         with open(JSON_filepath, 'w') as file:
             file.write(json.dumps(Paths))
 
@@ -54,7 +55,9 @@ class Directory_Structure_Creator:
         return f"Folder details saved to {save_as}"
 
     def save(self, destination_folder_path = os.getcwd()):
+        print(f"Inside save func destination_folder_path = {destination_folder_path}")
         filepath, extension = os.path.splitext(self.file_path)
+        print(f"Inside save func filepath = {filepath}")
         with open(self.file_path, 'r') as file:
             if extension == ".json":
                 Content = json.load(file)
@@ -71,7 +74,7 @@ class Directory_Structure_Creator:
             "Paths" : self.paths
         }
 
-        save_as = os.path.join(destination_folder_path, f"{filepath}_{date_time} Metadata.json")
+        save_as = os.path.join(destination_folder_path, f"{os.path.basename(filepath)} Metadata.json")
         Directory_Structure_Creator.export_JSON(Metadata,save_as)
         print(f"Metadata saved to {save_as}")
     
