@@ -34,7 +34,7 @@ class Directory_Structure_Creator:
         for Path in List:
             if not os.path.exists(os.path.join(destination_folder_path, Path)):
                 os.makedirs(os.path.join(destination_folder_path, Path))
-        return f"Folder structute created in : {destination_folder_path}"
+        return f"Folder structure created in : {destination_folder_path}"
 
     @staticmethod
     def export_JSON(Paths, JSON_filepath):
