@@ -6,7 +6,9 @@ class Directory_Structure_Creator:
     def __init__(self,file_path, paths = None):
         self.file_path = file_path
         self.paths = paths
-
+        if os.path.splitext(1) == ".txt":
+            self.parse_File()
+            
     def parse_File(self):
         Routs = []
         with open(self.file_path,"r") as file:
