@@ -78,10 +78,19 @@ In the above example,
 
 ### Using Graphical User Interface (GUI)
 
-* As of now, you can export a folder structure as a JSON file
+* You can export a folder structure as a JSON file. You can alao create a folder structure by specifying the structure file and the destination where the fokder structure needs to be created
 * To access the GUI run the following command
   ```
   python GUI.py
+  ```
+
+### Using terninal app
+
+* By using the terminal app, you can create a folder structure specifing structure file
+* To run the terminal app, use the command
+
+  ```
+  python Termnal app.py <Options>
   ```
 
 ## Structure file key for text file
@@ -102,3 +111,12 @@ In the above example,
 | from_JSON()        | Reads a json file and creates an object of the Directory_Structure_Creator class which can be used layter to create the directory structure          |
 | from_Metadata()    | Reads a metadata file and creates an object of the Directory_Structure_Creator class which can be used layter to create the directory structure      |
 | save()             | Saves the metadata of the current object as a JSON file                                                                                               |
+
+## Options for terminal app
+
+| Option        | Optiomal / Required | Descrioption                                                             |
+| ------------- | ------------------- | ------------------------------------------------------------------------ |
+| -h, --help    | Optonal             | Show the help text                                                       |
+| --saveas      | Optional            | Specify the folder where the metadatais to be save                       |
+| structurefile | Required            | Specify the location of the file where the folder structure is described |
+| dest          | Required            | Specify the folder where the structure is to be created                  |
