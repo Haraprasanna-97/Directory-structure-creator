@@ -48,7 +48,7 @@ In the above example,
 
 * A and G are root folders
 * B, D and E are sub-foldera under A
-* C is a sub-folder under B, and F is a sub-folder under aE, hense C and E are sub-sub folder
+* C is a sub-folder under B, and F is a sub-folder under E, hense C and E are sub-sub folder
 
 ### JSON file
 
