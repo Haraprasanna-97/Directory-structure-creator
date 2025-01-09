@@ -86,7 +86,8 @@ def saveFolderStructure():
     
     def save():
         global obj
-        obj.save(destination_folder_path=save_location.get())
+        message = obj.save(destination_folder_path=save_location.get())
+        messagebox.showinfo("Message", message=message)
 
     Save_destination_folder_label = Label(saveas_window,text="No save location chosen")
     Save_destination_folder_label.grid(row=0, column=0)

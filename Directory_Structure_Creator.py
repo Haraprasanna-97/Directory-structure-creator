@@ -67,18 +67,22 @@ class Directory_Structure_Creator:
                 Content = file.read()
 
         now = datetime.now()
-        date_time = now.strftime("%Y-%m-%d %H:%M:%S")
+        date_time = now.strftime("%Y-%m-%d %H-%M-%S")
+        date = date_time.split(" ")[0]
+        time = date_time.split(" ")[1].replace("-",":")
+        filepath_basename = os.path.basename(filepath)
 
         Metadata = {
-            "Date and time" : date_time,
+            "Date" : date,
+            "time" : time,
             "Structure descriptor file path" : self.file_path,
             "Structure descriptor file content" : Content,
             "Paths" : self.paths
         }
 
-        save_as = os.path.join(destination_folder_path, f"{os.path.basename(filepath)} Metadata.json")
+        save_as = os.path.join(destination_folder_path, f"{filepath_basename} Metadata.json")
         Directory_Structure_Creator.export_JSON(Metadata,save_as)
-        print(f"Metadata saved to {save_as}")
+        return f"Metadata saved to {destination_folder_path}/{filepath_basename} Metadata.json"
     
     # Alternate Constructors
     @classmethod
